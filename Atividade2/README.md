@@ -1,4 +1,4 @@
-# 📊 Atividade 2: Aplicação Prática Da Linguagem SQL
+# 📊 Atividade 2: Aplicação Prática da Linguagem SQL
 
 ## 🧠 Contextualização
 
