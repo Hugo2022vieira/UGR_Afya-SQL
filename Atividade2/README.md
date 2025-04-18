@@ -20,16 +20,16 @@ Hoje, a SQL é um dos conhecimentos fundamentais para profissionais de tecnologi
 ### 1️⃣ Exibir o nome do cliente, o nome do produto e a quantidade comprada, para cada pedido registrado:
 
 ```sql
-SELECT 
-    clientes.nome AS nome_cliente,
-    produtos.nome AS nome_produto,
-    pedidos.quantidade
-FROM 
-    pedidos
-JOIN 
-    clientes ON pedidos.cliente_id = clientes.id
-JOIN 
-    produtos ON pedidos.produto_id = produtos.id;
+SELECT
+    c.nome AS nome_cliente,
+    p.nome AS nome_produto,
+    ped.quantidade
+FROM
+    pedidos ped
+JOIN
+    clientes c ON ped.cliente_id = c.id
+JOIN
+    produtos p ON ped.produto_id = p.id;
 ```
 
 ---
@@ -69,10 +69,11 @@ CREATE TABLE fornecedores (
 );
 
 ALTER TABLE produtos
-ADD COLUMN fornecedor_id INT,
+ADD COLUMN fornecedor_id INT;
+
+ALTER TABLE produtos
 ADD CONSTRAINT fk_fornecedor
-    FOREIGN KEY (fornecedor_id)
-    REFERENCES fornecedores(id);
+FOREIGN KEY (fornecedor_id) REFERENCES fornecedores(id);
 ```
 
 ---
@@ -80,15 +81,18 @@ ADD CONSTRAINT fk_fornecedor
 ### 5️⃣ Mostrar quantos pedidos foram feitos por cada cliente:
 
 ```sql
-SELECT 
-    clientes.nome AS nome_cliente,
-    COUNT(pedidos.id) AS total_pedidos
-FROM 
-    pedidos
-JOIN 
-    clientes ON pedidos.cliente_id = clientes.id
-GROUP BY 
-    clientes.nome;
+SELECT
+    c.nome AS nome_cliente,
+    COUNT(ped.id) AS total_pedidos
+FROM
+    clientes c
+LEFT JOIN
+    pedidos ped ON c.id = ped.cliente_id
+GROUP BY
+    c.nome
+ORDER BY
+    total_pedidos DESC;
+
 ```
 
 ---
